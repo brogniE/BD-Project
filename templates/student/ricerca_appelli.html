@@ -1,0 +1,72 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    student-ricerca_appelli
+{% endblock %}
+
+{% block li %}
+  {% include 'student/navbar_studente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Appelli disponibili</h1>
+</div>
+
+<br>
+
+<div class="container-fluid">
+    <!-- il form invia alla stessa pagina ma con la lista delgi appelli contenti solo i corrispondendi alla search -->
+    <form action="{{ url_for('studenti.ricerca_appelli_id') }}" method="POST">
+        <div class="input-group" style="width:80%; margin: auto;">
+          <input type="search" id="searchid" name="searchid" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          <button type="submit" class="btn btn-outline-primary">search</button>
+        </div>
+    </form>
+    <br/>
+  <table id="appelli" class="table table-striped" style="width:80%; margin: auto;">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Facoltà</th>
+        <th>Corso</th>
+        <th>Tipologia</th>
+        <th>CFU</th>
+        <th>Docente</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+        {# for each per scorrere tutti gli appelli disponibili oppure gli appelli corrispondenti con la search #}
+        {% for appello in appelli %}
+        <tr>
+            <td><a href="{{ url_for('studenti.conferma_appello', idAppello=appello.idA) }}"><img
+                    src="{{ url_for('static', filename='images/clipboard2-fill.svg') }}"></a></td>
+            <td>{{appello.prova.esame.facolta}}</td>
+            <td>{{appello.prova.esame.corso}}</td>
+            <td>{{appello.prova.tipo}}</td>
+            <td>{{appello.prova.esame.cfu}}</td>
+            <td>{{appello.prova.idD}}</td>
+            <td>{{appello.data}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th>Facoltà</th>
+        <th>Corso</th>
+        <th>Tipologia</th>
+        <th>CFU</th>
+        <th>Docente</th>
+        <th>Data</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<br>
+<br>
+
+{% endblock %}

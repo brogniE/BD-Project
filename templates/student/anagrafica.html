@@ -1,0 +1,52 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    student-anagrafica
+{% endblock %}
+
+{% block li %}
+    {% include 'student/navbar_studente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Area Studente</h1>
+</div>
+
+<br>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Nome: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{student.utente.nome}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Cognome: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{student.utente.cognome}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Email: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{student.emailS}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Data Nascita: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{student.utente.dataNascita}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Telefono: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{student.utente.telefono}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Matricola: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{student.matricola}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Facoltà: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{student.facolta}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Anno iscrizione: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{student.annoIscrizione}}</div>
+</div>
+{% endblock %}

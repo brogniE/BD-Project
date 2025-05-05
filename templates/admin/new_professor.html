@@ -1,0 +1,62 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    admin-new_professor
+{% endblock %}
+
+{% block styles %}
+    <link href="{{ url_for('static', filename='css/form.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block li %}
+  {% include 'admin/navbar_admin.html' %}
+{% endblock %}
+
+{% block content %}
+{% include 'main/message.html' %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Nuovo professore</h1>
+</div>
+<br>
+<form class="form-register" action="{{ url_for('admin.conferma_docente') }}" method="POST">
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label class="form-label" for="emailid">Email</label>
+      <input type="email" id="emailid" class="form-control" placeholder="user@unive.it" name="email" required/>
+    </div>
+    <div class="form-group col-md-6">
+      <label class="form-label" for="passwordid">Password</label>
+      <input type="password" id="passwordid" class="form-control" name="password" placeholder="Password" required/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-4">
+      <label class="form-label" for="nomeid">Nome</label>
+      <input type="text" id="nomeid" class="form-control" name="nome" placeholder="Mario" required/>
+    </div>
+    <div class="form-group col-md-4">
+      <label class="form-label" for="cognomeid">Cognome</label>
+      <input type="text" id="cognomeid" class="form-control" name="cognome" placeholder="Rossi" required/>
+    </div>
+    <div class="form-group col-md-4">
+      <label class="form-label" for="dataid">Data di nascita</label>
+      <input type="date" class="form-control" id="dataid" name="data" required>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label class="form-label" for="dipartimentoid">Dipartimento</label>
+      <input type="text" id="dipartimentoid" class="form-control" name="dipartimento" placeholder="Informatica" required/>
+    </div>
+    <div class="form-group col-md-6">
+      <label class="form-label" for="telefonoid">Telefono</label>
+      <input type="tel" id="telefonoid" class="form-control" name="telefono" required/>
+    </div>
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">Crea</button>
+</form>
+
+{% endblock %}

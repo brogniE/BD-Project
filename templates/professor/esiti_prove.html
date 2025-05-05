@@ -1,0 +1,107 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    professor-esiti
+{% endblock %}
+
+{% block li %}
+    {% include 'professor/navbar_docente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Esiti prove</h1>
+</div>
+
+<br>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">IdEsame: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{esame.idE}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Corso: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{esame.corso}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Facoltà: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{esame.facolta}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Anno: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{esame.anno}}</div>
+</div>
+
+<br>
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h2>Lista prove</h2>
+</div>
+
+<br>
+
+<div class="container-fluid">
+  <table id="appelli" class="table table-striped" style="width:80%; margin: auto;">
+    <thead>
+      <tr>
+        <th></th>
+        <th>IdEsame</th>
+        <th>Facoltà</th>
+        <th>Corso</th>
+        <th>IdProva</th>
+        <th>Tipo</th>
+        <th>Ricaduta</th>
+      </tr>
+    </thead>
+    <tbody>
+        {# for each per scorrere le tutte prove corrispondenti al professore #}
+        {% for prova in prove %}
+        <tr>
+            <td><a href="{{ url_for('docenti.esiti_appelli', idP=prova.idP) }}"><img src="{{url_for('static', filename='images/clipboard2-fill.svg')}}"></a></td>
+            <td>{{prova.idE}}</td>
+            <td>{{prova.esame.facolta}}</td>
+            <td>{{prova.esame.corso}}</td>
+            <td>{{prova.idP}}</td>
+            <td>{{prova.tipo}}</td>
+            <td>{{prova.ricaduta}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+
+    <div class="container d-flex align-items-center justify-content-center">
+        <h2>Registrazione voti</h2>
+    </div>
+
+    <table class="table table-striped" style="width:80%; margin: auto;">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Matricola</th>
+          </tr>
+        </thead>
+        <tbody>
+            {# for each per scorrere tutti gli studenti il cui voto è pronto per essere registrato #}
+            {% for studente in studenti %}
+            <tr>
+                <td><a href="{{ url_for('docenti.registra_voto', idE=esame.idE, idS=studente.emailS) }}"><img src="{{url_for('static', filename='images/clipboard2-fill.svg')}}"></a></td>
+                <td>{{studente.utente.nome}}</td>
+                <td>{{studente.utente.cognome}}</td>
+                <td>{{studente.matricola}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+
+    <br>
+    <br>
+
+
+{% endblock %}

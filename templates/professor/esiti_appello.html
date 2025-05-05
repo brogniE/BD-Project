@@ -1,0 +1,104 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    professor-esiti
+{% endblock %}
+
+{% block li %}
+    {% include 'professor/navbar_docente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Esiti prove</h1>
+</div>
+
+<br>
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h2>Esiti Appello</h2>
+</div>
+
+<br>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">IdEsame: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.idE}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Facoltà: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.esame.facolta}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Corso: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.esame.corso}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">IdProva: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.idP}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Tipo: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.tipo}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Ricaduta: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.ricaduta}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Data: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.data}}</div>
+</div>
+
+<br>
+
+<div class="container-fluid">
+  <table id="appelli" class="table table-striped" style="width:80%; margin: auto;">
+    <thead>
+      <tr>
+        <th>Nome</th>
+                <th>Cognome</th>
+                <th>Matricola</th>
+                <th>{% if appello.prova.ricaduta == "Bonus" %}
+                            Bonus
+                    {% elif appello.prova.ricaduta == "Idoneità" %}
+                            Idoneità
+                    {% else %}
+                        Voto
+                    {% endif %}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                {# for each per scorrere le tutti gli studenti che hanno partecipato all'appello #}
+                {% for studente_app in studenti_app %}
+                <tr>
+                    <td>{{studente_app.studente.utente.nome}}</td>
+                    <td>{{studente_app.studente.utente.cognome}}</td>
+                    <td>{{studente_app.studente.matricola}}</td>
+                    <td>{% if appello.prova.ricaduta == "Bonus" %}
+                        {{studente_app.bonus}}
+                        {% elif appello.prova.ricaduta == "Idoneità" %}
+                            {% if studente_app.provaSuperata %}
+                                Idoneo
+                            {% else %}
+                                Non idoneo
+                            {% endif %}
+                            
+                        {% else %}
+                            {% if studente_app.lode %}
+                                30 e lode 
+                            {% else %}
+                                {{studente_app.voto}} 
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

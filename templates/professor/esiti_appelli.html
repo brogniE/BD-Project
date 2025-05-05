@@ -1,0 +1,74 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    professor-esiti
+{% endblock %}
+
+{% block li %}
+    {% include 'professor/navbar_docente.html' %}
+{% endblock %}
+
+{% block content %}
+{% include 'main/message.html' %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Esiti prove</h1>
+</div>
+
+<br>
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h2>Lista appelli</h2>
+</div>
+
+<br>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">IdEsame: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{prova.idE}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Facoltà: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{prova.esame.facolta}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Corso: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{prova.esame.corso}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">IdProva: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{prova.idP}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Tipologia: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{prova.tipo}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Ricaduta: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{prova.ricaduta}}</div>
+</div>
+
+<br/>
+
+<div class="container-fluid">
+  <table id="appelli" class="table table-striped" style="width:80%; margin: auto;">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+        {# for each per scorrere tutti gli appelli corrispondenti alla prova al professore #}
+        {% for appello in appelli %}
+        <tr>
+            <td><a href="{{ url_for('docenti.esiti_appello', idA=appello.idA) }}"><img src="{{url_for('static', filename='images/clipboard2-fill.svg')}}"></a></td>
+            <td>{{appello.data}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

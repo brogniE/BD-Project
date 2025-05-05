@@ -1,0 +1,44 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    student-anagrafica
+{% endblock %}
+
+{% block li %}
+    {% include 'student/navbar_studente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Conferma iscrizione</h1>
+</div>
+
+<br>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Corso: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.esame.corso}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Tipologia: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.tipo}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Docente: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.idD}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Data: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.data}}</div>
+</div>
+
+<br>
+
+    <form action="{{ url_for('studenti.iscrivi_stud_appello', idAppello=appello.idA) }}">
+    <div class="col text-center">
+        <button type="submit" class="btn btn-primary">Conferma iscrizione</button>
+    </div>
+</form>
+{% endblock %}

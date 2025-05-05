@@ -1,0 +1,84 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    student-esami
+{% endblock %}
+
+{% block li %}
+  {% include 'student/navbar_studente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Prove</h1>
+</div>
+
+<br>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">IdE: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{esame.idE}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Facoltà: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{esame.facolta}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Corso: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{esame.corso}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">CFU: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{esame.cfu}}</div>
+</div>
+
+<br>
+<div class="container-fluid">
+    <table class="table table-striped" style="width:80%; margin: auto;">
+      <thead>
+        <tr>
+          <th>IdP</th>
+          <th>Tipo</th>
+          <th>Ricaduta</th>
+          <th>Peso</th>
+          <th>Voto</th>
+          <th>Bonus</th>
+          <th>Data</th>
+          <th>Data scadenza</th>
+          <th>Docente</th>
+          <th>Prova valida</th>
+        </tr>
+      </thead>
+      <tbody>
+        {# for each per scorrere tutte le prove valide dello studente idS per l'esame idE  #}
+        {% for ris in prove %}
+        <tr>
+            <td>{{ris.appello.idP}}</td>
+            <td>{{ris.appello.prova.tipo}}</td>
+            <td>{{ris.appello.prova.ricaduta}}</td>
+            <td>{{ris.appello.prova.peso}}</td>
+            <td>{% if ris.provaSuperata %}
+                        {% if ris.lode %}
+                            30 e lode 
+                        {% else %}
+                          {{ris.voto}} 
+                        {% endif %}
+                {% else %}
+                    Prova non superata
+                {% endif %}
+            </td>
+            <td>{{ris.bonus}}</td>
+            <td>{{ris.appello.data}}</td>
+            <td>{{ris.dataScadenza}}</td>
+            <td>{{ris.appello.prova.idD}}</td>
+            <td>{{ris.provaSuperata}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+<br>
+<br>
+
+{% endblock %}

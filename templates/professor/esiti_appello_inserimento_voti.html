@@ -1,0 +1,122 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    professor-esiti
+{% endblock %}
+
+{% block li %}
+    {% include 'professor/navbar_docente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Esiti prove</h1>
+</div>
+
+<br>
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h2>Esiti Appello</h2>
+</div>
+
+<br>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">IdEsame: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.idE}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Facoltà: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.esame.facolta}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Corso: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.esame.corso}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">IdProva: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.idP}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Tipo: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.tipo}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Ricaduta: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.prova.ricaduta}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Data: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{appello.data}}</div>
+</div>
+
+<br>
+
+<div class="container-fluid">
+    <form method="POST" action="{{ url_for('docenti.inserimento_voti_appello', idA=appello.idA) }}">
+        <table id="appelli" class="table table-striped" style="width:80%; margin: auto;">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Matricola</th>
+                <th>{% if appello.prova.ricaduta == "Bonus" %}
+                            Bonus
+                    {% elif appello.prova.ricaduta == "Idoneità" %}
+                            Idoneità
+                    {% else %}
+                        Voto</th>
+                        <th>Lode
+                    {% endif %}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                {# for each per scorrere le tutti gli studenti che hanno partecipato all'appello #}
+                {% for studente_app in studenti_app %}
+                <tr>
+                    <td>{{studente_app.studente.utente.nome}}</td>
+                    <td>{{studente_app.studente.utente.cognome}}</td>
+                    <td>{{studente_app.studente.matricola}}</td>
+                    <td>{% if appello.prova.ricaduta == "Bonus" %}
+                        <input type="number"  id="{{studente_app.studente.matricola}}_bonus" name="{{studente_app.studente.matricola}}_bonus"min="0" max="5"/>
+                        {% elif appello.prova.ricaduta == "Idoneità" %}
+                            <input type="checkbox" id="{{studente_app.studente.matricola}}_idoneita" name="{{studente_app.studente.matricola}}_idoneita" class="form-control"/> 
+                        {% else %}
+                            <input type="number" id="{{studente_app.studente.matricola}}_voto" name="{{studente_app.studente.matricola}}_voto" min="0" max="30"/></td>
+                            <td><input type="checkbox" id="{{studente_app.studente.matricola}}_lode" name="{{studente_app.studente.matricola}}_lode" disabled/>
+                                <script>
+                                    document.getElementById('{{studente_app.studente.matricola}}_voto').addEventListener('input', function() {
+                                        var numero = document.getElementById('{{studente_app.studente.matricola}}_voto').value;
+                                        var checkbox = document.getElementById('{{studente_app.studente.matricola}}_lode');
+                                    
+                                        if (numero == 30) {  
+                                            checkbox.disabled = false;
+                                        } else {
+                                            checkbox.disabled = true;
+                                            checkbox.checked = false;
+                                        }
+                                    });
+                                </script>
+                        {% endif %}
+                        </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br/>
+        <div class="form-group" style="width: 50%; margin:0 auto">
+            <label for="dataid" class="form-label">Inserire la data di scadenza di validità della prova</label>
+            <input type="date" class="form-control" id="dataid" name="dataid" required>
+        </div>
+        <br/>
+        <div class="col text-center">
+            <button type="submit" class="btn btn-primary">Salva voti</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

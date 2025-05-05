@@ -1,0 +1,48 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    professor-esiti
+{% endblock %}
+
+{% block li %}
+    {% include 'professor/navbar_docente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Esiti Esami</h1>
+</div>
+
+<br>
+
+<div class="container-fluid">
+  <table id="appelli" class="table table-striped" style="width:80%; margin: auto;">
+    <thead>
+      <tr>
+        <th></th>
+        <th>IdEsame</th>
+        <th>Corso</th>
+        <th>Facoltà</th>
+        <th>CFU</th>
+        <th>Anno</th>
+      </tr>
+    </thead>
+    <tbody>
+        {# for each per scorrere tutti gli esami corrispondenti al professore #}
+        {% for esame in esami %}
+        <tr>
+            <td><a href="{{ url_for('docenti.esiti_prove', idE=esame.idE) }}"><img src="{{url_for('static', filename='images/clipboard2-fill.svg')}}"></a></td>
+            <td>{{esame.idE}}</td>
+            <td>{{esame.corso}}</td>
+            <td>{{esame.facolta}}</td>
+            <td>{{esame.cfu}}</td>
+            <td>{{esame.anno}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

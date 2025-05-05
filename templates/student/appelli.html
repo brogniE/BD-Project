@@ -1,0 +1,73 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    student-appelli
+{% endblock %}
+
+{% block li %}
+ {% include 'student/navbar_studente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Appelli disponibili</h1>
+</div>
+
+<br>
+<div style="width:80%; margin: auto; text-align: right;">
+    <a href="{{ url_for('studenti.bacheca_prenotazioni') }}">Bacheca prenotazioni</a>
+</div>
+
+<br>
+<div class="container-fluid">
+  <table id="appelli" class="table table-striped" style="width:80%; margin: auto;">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Facoltà</th>
+        <th>Corso</th>
+        <th>Tipologia</th>
+        <th>CFU</th>
+        <th>Docente</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+        {# for each per scorrere gli appelli degli esami disponibili in base alla facoltà e all'anno #}
+        {% for appello in appelli %}
+        <tr>
+            <td><a href="{{ url_for('studenti.conferma_appello', idAppello=appello.idA) }}"><img
+                    src="{{ url_for('static', filename='images/clipboard2-fill.svg') }}"></a></td>
+            <td>{{appello.prova.esame.facolta}}</td>
+            <td>{{appello.prova.esame.corso}}</td>
+            <td>{{appello.prova.tipo}}</td>
+            <td>{{appello.prova.esame.cfu}}</td>
+            <td>{{appello.prova.idD}}</td>
+            <td>{{appello.data}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th>Facoltà</th>
+        <th>Corso</th>
+        <th>Tipologia</th>
+        <th>CFU</th>
+        <th>Docente</th>
+        <th>Data</th>
+      </tr>
+    </tfoot>
+  </table>
+  <br/>
+  <div style="width:80%; margin: auto;">
+      Per la prenotazione agli appelli di insegnamenti non previsti nel proprio libretto accedere alla sezione <a
+          href="{{ url_for('studenti.ricerca_appelli') }}">ricerca appelli</a>
+  </div>
+  <br>
+  <br>
+</div>
+
+{% endblock %}

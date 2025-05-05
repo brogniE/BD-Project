@@ -1,0 +1,58 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    student-appelli
+{% endblock %}
+
+{% block li %}
+  {% include 'student/navbar_studente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Bacheca prenotazioni</h1>
+</div>
+
+<br>
+<div class="container-fluid">
+  <table id="appelli" class="table table-striped" style="width:80%; margin: auto;">
+    <thead>
+      <tr>
+        <th>Facoltà</th>
+        <th>Corso</th>
+        <th>Tipologia</th>
+        <th>CFU</th>
+        <th>Docente</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+        {# for each per scorrere gli appelli degli esami disponibili in base alla facoltà e all'anno #}
+        {% for appello in appelli %}
+        <tr>
+            <td>{{appello.prova.esame.facolta}}</td>
+            <td>{{appello.prova.esame.corso}}</td>
+            <td>{{appello.prova.tipo}}</td>
+            <td>{{appello.prova.esame.cfu}}</td>
+            <td>{{appello.prova.idD}}</td>
+            <td>{{appello.data}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Facoltà</th>
+        <th>Corso</th>
+        <th>Tipologia</th>
+        <th>CFU</th>
+        <th>Docente</th>
+        <th>Data</th>
+      </tr>
+    </tfoot>
+  </table>
+  <br/>
+</div>
+
+{% endblock %}

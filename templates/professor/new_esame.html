@@ -1,0 +1,67 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    professor-new_esame
+{% endblock %}
+
+{% block styles %}
+    <link href="{{ url_for('static', filename='css/form.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block li %}
+    {% include 'professor/navbar_docente.html' %}
+{% endblock %}
+
+{% block content %}
+{% include 'main/message.html' %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Nuovo esame</h1>
+</div>
+
+<br>
+
+<form class="form-register" action="{{ url_for('docenti.conferma_esame') }}" method="POST">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="corsoid" class="form-label">Corso</label>
+            <input type="text" class="form-control" id="corsoid" name="corsoid" placeholder="Corso" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="facoltaid" class="form-label">Facoltà</label>
+            <input type="text" class="form-control" id="facoltaid" name="facoltaid" placeholder="Facoltà" required>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="cfuid" class="form-label">CFU</label>
+            <select class="form-control" id="cfuid" name="cfuid">
+                <option value="3">3</option>
+                <option value="6" selected>6</option>
+                <option value="9">9</option>
+                <option value="12">12</option>
+                <option value="15">15</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="annoid" class="form-label">Anno</label>
+            <select class="form-control" id="annoid" name="annoid">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+    
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Crea</button>
+
+</form>
+
+
+
+{% endblock %}

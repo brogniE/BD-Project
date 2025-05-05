@@ -1,0 +1,103 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    professor-esiti
+{% endblock %}
+
+{% block styles %}
+    <link href="{{ url_for('static', filename='css/form.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block li %}
+    {% include 'professor/navbar_docente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Registrazione voto</h1>
+</div>
+
+<br>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Nome: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{studente.utente.nome}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Cognome: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{studente.utente.cognome}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Matricola: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{studente.matricola}}</div>
+</div>
+
+<br>
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h2>Lista prove</h2>
+</div>
+
+<br>
+
+<div class="container-fluid">
+  <table id="appelli" class="table table-striped" style="width:80%; margin: auto;">
+    <thead>
+      <tr>
+        <th>IdProva</th>
+        <th>Tipo</th>
+        <th>Ricaduta</th>
+        <th>Voto</th>
+      </tr>
+    </thead>
+    <tbody>
+        {# for each per scorrere le tutte prove superate dallo studente #}
+        {% for p in prove %}
+        <tr>
+            <td>{{p.appello.prova.idP}}</td>
+            <td>{{p.appello.prova.tipo}}</td>
+            <td>{{p.appello.prova.ricaduta}}</td>
+            <td>{% if p.appello.prova.ricaduta == "Bonus" %}
+                    {{p.bonus}}
+                {% elif p.appello.prova.ricaduta == "Idoneità" %}
+                    Idoneo
+                {% else %}
+                    {% if p.lode %}
+                        30 e lode 
+                    {% else %}
+                        {{p.voto}} 
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<br>
+<br>
+
+<form class="form-register" action="{{ url_for('docenti.conferma_registrazione_voto', idE=idE, idS=studente.emailS, flag=voto) }}" method="POST">
+    <div class="row">
+        <div class="form-group col-md-6">
+            {% if voto == -1 %}
+                <label class="form-label" for="idoneoid">Idoneo</label>
+                <input type="checkbox" id="idoneoid" name="idoneo" class="form-control" required/> 
+            {% else %}
+                <label class="form-label" for="votoid">Voto finale</label>
+                <input type="number" id="votoid" class="form-control" name="voto" value="{{voto}}" required/> 
+            {% endif %}
+        </div>
+        <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-primary">Conferma</button>
+        </div>
+    </div>
+</form>
+
+<br>
+<br>
+
+{% endblock %}

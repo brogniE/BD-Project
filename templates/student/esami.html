@@ -1,0 +1,98 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    student-esami
+{% endblock %}
+
+{% block li %}
+  {% include 'student/navbar_studente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<br>
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Libretto</h1>
+</div>
+
+<br>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Media ponderata: </div>
+    <div class="col-lg-3 col-md-3 col-sm-3">{{ media }}</div>
+</div>
+
+<br>
+<div class="container-fluid">
+    <table class="table table-striped" style="width:80%; margin: auto;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>idE</th>
+          <th>Facoltà</th>
+          <th>Corso</th>
+          <th>CFU</th>
+          <th>Voto</th>
+          <th>Idoneità</th>
+        </tr>
+      </thead>
+      <tbody>
+        {# for each per scorrere gli esami di cui lo studente a provato almeno una prova #}
+        {% for esame_reg in libretto %}
+        <tr>
+            <td><a href="{{ url_for('studenti.corsi', idE=esame_reg.idE) }}"><img
+                    src="{{ url_for('static', filename='images/clipboard2-fill.svg') }}"></a></td>
+            <td>{{esame_reg.idE}}</td>
+            <td>{{esame_reg.esame.facolta}}</td>
+            <td>{{esame_reg.esame.corso}}</td>
+            <td>{{esame_reg.esame.cfu}}</td>
+            <td>{% if esame_reg.lode %}
+                  30 e lode 
+                {% else %}
+                  {{esame_reg.voto}}
+                {% endif %}
+            </td>
+            <td>{{esame_reg.idoneo}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+  <br>
+
+  <div class="container d-flex align-items-center justify-content-center">
+    <h1>Esami non registrati</h1>
+  </div>
+
+<br>
+<div class="container-fluid">
+    <table class="table table-striped" style="width:80%; margin: auto;">
+      <thead>
+        <tr>
+          <th></th>
+          <th>idE</th>
+          <th>Facoltà</th>
+          <th>Corso</th>
+          <th>CFU</th>
+        </tr>
+      </thead>
+      <tbody>
+        {# for each per scorrere gli esami di cui lo studente a provato almeno una prova #}
+        {% for esame in esami %}
+        <tr>
+            <td><a href="{{ url_for('studenti.corsi', idE=esame.idE) }}"><img
+                    src="{{ url_for('static', filename='images/clipboard2-fill.svg') }}"></a></td>
+            <td>{{esame.idE}}</td>
+            <td>{{esame.facolta}}</td>
+            <td>{{esame.corso}}</td>
+            <td>{{esame.cfu}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  <br>
+<br>
+
+{% endblock %}

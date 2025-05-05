@@ -1,0 +1,46 @@
+{# estensione dell'html base #}
+{% extends 'main/base_navbar.html' %}
+
+{% block title %}
+    professor-anagrafica
+{% endblock %}
+
+{% block li %}
+    {% include 'professor/navbar_docente.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center justify-content-center">
+    <h1>Area Docente</h1>
+</div>
+
+<br>
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Nome: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{docente.utente.nome}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Cognome: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{docente.utente.cognome}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Email: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{docente.utente.email}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Telefono: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{docente.utente.telefono}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Data Nascita: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{docente.utente.dataNascita}}</div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-3 col-sm-3">Dipartimento: </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">{{docente.dipartimento}}</div>
+</div>
+
+
+{% endblock %}

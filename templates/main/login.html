@@ -1,0 +1,49 @@
+{# estensione dell'html base #}
+{% extends 'base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block styles %}
+    <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+{% include 'main/message.html' %}
+    {# form per il login #}
+    <section class="vh-100">
+        <div class="container-fluid h-custom">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+              <img src="{{url_for('static', filename='images/logo_unive_scritta.png')}}" class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+              <form method="POST" action="{{ url_for('autenticazione.login') }}">
+      
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input type="email" id="email" name="email" class="form-control form-control-lg"
+                    placeholder="Enter a valid email address" />
+                  <label class="form-label" for="email">Email address</label>
+                </div>
+      
+                <!-- Password input -->
+                <div class="form-outline mb-3">
+                  <input type="password" id="password" name="password" class="form-control form-control-lg"
+                    placeholder="Enter password" />
+                  <label class="form-label" for="password">Password</label>
+                </div>
+      
+                <div class="text-center text-lg-start mt-4 pt-2">
+                  <button type="submit" value="login" class="btn btn-primary btn-lg"
+                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                </div>
+      
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock %}

@@ -1,0 +1,10 @@
+{# estensione dell'html base #}
+{% extends 'base.html' %}
+
+{% block ul %}
+
+<ul class="navbar-nav fs-5 justify-content-evenly">
+    {% block li %}{% endblock %}
+</ul>
+
+{% endblock %}
